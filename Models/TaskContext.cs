@@ -9,7 +9,7 @@ namespace TaskHub.Models
         {
         }
 
-        public DbSet<Task> Tasks { get; set; } = default!;
+        public DbSet<TodoTask> Tasks { get; set; } = default!;
         
     }
 }
