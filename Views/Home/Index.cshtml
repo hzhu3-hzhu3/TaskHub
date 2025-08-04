@@ -1,8 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var currentTime = DateTime.Now;
+    var greeting = currentTime.Hour < 12 ? "Good Morning" : 
+                   currentTime.Hour < 18 ? "Good Afternoon" : "Good Evening";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to TaskHub</h1>
+    <p class="lead">@greeting! Current time is @currentTime.ToString("HH:mm:ss")</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Date</h5>
+                    <p class="card-text">@currentTime.ToString("MMMM dd, yyyy")</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Day of Week</h5>
+                    <p class="card-text">@currentTime.DayOfWeek</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
