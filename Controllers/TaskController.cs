@@ -18,5 +18,25 @@ namespace TaskHub.Controllers
             var tasks = await _context.Tasks.ToListAsync();
             return View(tasks);
         }
+
+        // GET: Task/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Task/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title,IsCompleted,DueDate")] TodoTask task)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(task);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(task);
+        }
     }
 } 
