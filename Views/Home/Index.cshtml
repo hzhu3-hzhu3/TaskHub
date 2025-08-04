@@ -10,7 +10,7 @@
     <p class="lead">@greeting! Current time is @currentTime.ToString("HH:mm:ss")</p>
     
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Today's Date</h5>
@@ -18,11 +18,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Day of Week</h5>
                     <p class="card-text">@currentTime.DayOfWeek</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Task Management</h5>
+                    <p class="card-text">Manage your tasks and stay organized</p>
+                    <a asp-controller="Task" asp-action="Index" class="btn btn-primary">
+                        <i class="fas fa-tasks"></i> View Tasks
+                    </a>
                 </div>
             </div>
         </div>
