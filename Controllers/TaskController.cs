@@ -19,13 +19,11 @@ namespace TaskHub.Controllers
             return View(tasks);
         }
 
-        // GET: Task/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Task/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,IsCompleted,DueDate")] TodoTask task)
@@ -37,6 +35,89 @@ namespace TaskHub.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(task);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsCompleted,DueDate")] TodoTask task)
+        {
+            if (id != task.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(task);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TaskExists(task.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(task);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Tasks
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            if (task != null)
+            {
+                _context.Tasks.Remove(task);
+                await _context.SaveChangesAsync();
+            }
+            
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool TaskExists(int id)
+        {
+            return _context.Tasks.Any(e => e.Id == id);
         }
     }
 } 
