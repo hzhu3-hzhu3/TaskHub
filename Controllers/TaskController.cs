@@ -19,13 +19,11 @@ namespace TaskHub.Controllers
             return View(tasks);
         }
 
-        // GET: Task/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Task/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,IsCompleted,DueDate")] TodoTask task)
